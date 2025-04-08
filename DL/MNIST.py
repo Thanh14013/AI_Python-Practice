@@ -3,6 +3,7 @@
 
 # Import necessary libraries
 import numpy as np
+import tensorflow as tf
 from keras.datasets import mnist
 from keras import models
 from keras import layers
