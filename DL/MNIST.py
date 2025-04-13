@@ -4,10 +4,10 @@
 # Import necessary libraries
 import numpy as np
 import tensorflow as tf
-from keras.datasets import mnist
+from keras import mnist
 from keras import models
 from keras import layers
-from keras.utils import to_categorical
+from keras import to_categorical
 
 # Step 1: Load the MNIST dataset
 # The dataset comes preloaded in Keras and returns training and testing data
