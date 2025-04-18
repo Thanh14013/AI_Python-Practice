@@ -29,8 +29,18 @@ print(X.describe().T[['mean', 'std', 'min', 'max']])
 
 # Feature names and their descriptions
 print("\nFeature names and descriptions:")
-for i, feature in enumerate(california.feature_names):
-    print(f"{feature}: {california.feature_names[i]}")
+feature_descriptions = {
+    'MedInc': 'Median income in block group',
+    'HouseAge': 'Median house age in block group',
+    'AveRooms': 'Average number of rooms per household',
+    'AveBedrms': 'Average number of bedrooms per household',
+    'Population': 'Block group population',
+    'AveOccup': 'Average number of household members',
+    'Latitude': 'Block group latitude',
+    'Longitude': 'Block group longitude'
+}
+for feature in california.feature_names:
+    print(f"{feature}: {feature_descriptions[feature]}")
 
 # Checking for missing values
 print("\nChecking for missing values:")
@@ -269,20 +279,3 @@ print(f"- Test set R²: {test_r2:.4f}")
 print(f"- Most important feature: {importance_df.iloc[0]['Feature']}")
 
 print("\nThe model successfully predicts California housing prices with reasonable accuracy.")
-print("Further improvements could include:")
-print("- Hyperparameter tuning")
-print("- Feature engineering")
-print("- Testing different model architectures")
-print("- Ensemble methods")
-
-# For completeness, let's add an explanation of the California Housing dataset features
-print("\nCalifornia Housing Dataset Features Explanation:")
-print("- MedInc: Median income in block group")
-print("- HouseAge: Median house age in block group")
-print("- AveRooms: Average number of rooms per household")
-print("- AveBedrms: Average number of bedrooms per household")
-print("- Population: Block group population")
-print("- AveOccup: Average number of household members")
-print("- Latitude: Block group latitude")
-print("- Longitude: Block group longitude")
-print("- Target: Median house value in $100,000s")
