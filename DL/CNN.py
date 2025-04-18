@@ -4,8 +4,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
-from tensorflow.keras import datasets, layers, models, optimizers, applications
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras import datasets, layers, models, optimizers, applications # type: ignore
+from tensorflow.keras.preprocessing.image import ImageDataGenerator # type: ignore
 import cv2
 from sklearn.metrics import classification_report, confusion_matrix
 import seaborn as sns

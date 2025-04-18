@@ -1,10 +1,10 @@
 import numpy as np
 import tensorflow as tf
-from tensorflow.keras.datasets import reuters
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Dropout
-from tensorflow.keras.preprocessing.text import Tokenizer
-from tensorflow.keras.utils import to_categorical
+from tensorflow.keras.datasets import reuters  # type: ignore
+from tensorflow.keras.models import Sequential # type: ignore
+from tensorflow.keras.layers import Dense, Dropout # type: ignore
+from tensorflow.keras.preprocessing.text import Tokenizer # type: ignore
+from tensorflow.keras.utils import to_categorical # type: ignore
 import matplotlib.pyplot as plt
 
 # 1. Preparing the data

@@ -4,10 +4,10 @@
 # Import necessary libraries
 import numpy as np
 import tensorflow as tf
-from tensorflow.keras.datasets import mnist
-from tensorflow.keras import models
-from tensorflow.keras import layers
-from tensorflow.keras.utils import to_categorical
+from tensorflow.keras.datasets import mnist # type: ignore
+from tensorflow.keras import models # type: ignore
+from tensorflow.keras import layers # type: ignore
+from tensorflow.keras.utils import to_categorical # type: ignore
 
 # Step 1: Load the MNIST dataset
 # The dataset comes preloaded in Keras and returns training and testing data

@@ -1,13 +1,13 @@
 import numpy as np
 import pandas as pd
 import tensorflow as tf
-from tensorflow.keras.preprocessing.text import Tokenizer
-from tensorflow.keras.preprocessing.sequence import pad_sequences
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Embedding, LSTM, Dense, Dropout
-from tensorflow.keras.callbacks import EarlyStopping
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report, confusion_matrix
+from tensorflow.keras.preprocessing.text import Tokenizer # type: ignore
+from tensorflow.keras.preprocessing.sequence import pad_sequences # type: ignore 
+from tensorflow.keras.models import Sequential # type: ignore
+from tensorflow.keras.layers import Embedding, LSTM, Dense, Dropout # type: ignore
+from tensorflow.keras.callbacks import EarlyStopping # type: ignore
+from sklearn.model_selection import train_test_split # type: ignore
+from sklearn.metrics import classification_report, confusion_matrix # type: ignore
 import matplotlib.pyplot as plt
 import seaborn as sns
 
