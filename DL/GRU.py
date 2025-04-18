@@ -25,7 +25,7 @@ def generate_sine_wave(seq_length, num_samples):
 # Parameters
 seq_length = 50
 num_samples = 1000
-input_size = 1
+inputs_size = 1
 hidden_size = 32
 output_size = 1
 num_epochs = 100
@@ -49,11 +49,12 @@ def create_gru_model():
     model = keras.Sequential([
         # GRU layer
         layers.GRU(hidden_size, 
-                  input_shape=(seq_length, input_size),
-                  return_sequences=False),  # We only want the last output
+                  input_shape=(seq_length, inputs_size),
+                  return_sequences=False,
+                  name='gru_layer'),  # Added name for easier reference
         
         # Output layer
-        layers.Dense(output_size)
+        layers.Dense(output_size, name='output_layer')
     ])
     
     # Compile the model
@@ -69,20 +70,21 @@ def create_deep_gru_model():
     model = keras.Sequential([
         # First GRU layer with return sequences for stacking
         layers.GRU(hidden_size, 
-                  input_shape=(seq_length, input_size),
-                  return_sequences=True),
+                  input_shape=(seq_length, inputs_size),
+                  return_sequences=True,
+                  name='gru_layer_1'),
         
         # Dropout for regularization
         layers.Dropout(0.2),
         
         # Second GRU layer
-        layers.GRU(hidden_size // 2, return_sequences=False),
+        layers.GRU(hidden_size // 2, return_sequences=False, name='gru_layer_2'),
         
         # Dropout for regularization
         layers.Dropout(0.2),
         
         # Output layer
-        layers.Dense(output_size)
+        layers.Dense(output_size, name='output_layer')
     ])
     
     # Compile the model
@@ -95,6 +97,11 @@ def create_deep_gru_model():
 
 # Create the model (choose between basic and deep model)
 model = create_gru_model()  # or create_deep_gru_model()
+
+# The model needs to be built before we can access its outputs
+# Let's build it by calling it with a dummy input
+dummy_input = np.zeros((1, seq_length, inputs_size))
+_ = model(dummy_input)
 
 # Display the model architecture
 model.summary()
@@ -140,10 +147,10 @@ def predict_future(model, initial_sequence, steps=200):
     
     for _ in range(steps):
         # Reshape for prediction
-        current_input = current_sequence.reshape(1, seq_length, 1)
+        current_inputs = current_sequence.reshape(1, seq_length, 1)
         
         # Get next predicted value
-        next_pred = model.predict(current_input, verbose=0)[0, 0]
+        next_pred = model.predict(current_inputs, verbose=0)[0, 0]
         predictions.append(next_pred)
         
         # Update sequence for next prediction (remove oldest, add new prediction)
@@ -178,16 +185,14 @@ plt.legend()
 plt.grid(True)
 
 # Analyze and visualize GRU internal representations
+# Find the GRU layer by name instead of type
+gru_layer = model.get_layer('gru_layer')  # Use the name we gave to the GRU layer
+
 # Create a model that outputs the GRU layer activations
-if isinstance(model.layers[0], layers.GRU):
-    # For basic model
-    activation_model = keras.Model(
-        inputs=model.input,
-        outputs=model.layers[0].output
-    )
-else:
-    # In case we're using the deep model with more layers
-    print("Using a more complex model structure")
+activation_model = keras.Model(
+    inputs=model.input,
+    outputs=gru_layer.output
+)
 
 # Get hidden states for a few test samples
 test_samples = X_test[:10]
@@ -219,10 +224,13 @@ plt.grid(True)
 # This helps us understand how the model processes sequential information
 def predict_with_attention(model, sequence):
     """Make a prediction and return the hidden states to analyze attention"""
+    # Get the GRU layer by name
+    gru_layer = model.get_layer('gru_layer')
+    
     # Create a model that returns both the prediction and the hidden state
     attention_model = keras.Model(
         inputs=model.input,
-        outputs=[model.output, model.layers[0].output]
+        outputs=[model.output, gru_layer.output]
     )
     
     # Make prediction
@@ -231,7 +239,7 @@ def predict_with_attention(model, sequence):
     
     return prediction[0, 0], hidden_states
 
-# Visualize how the GRU attends to different parts of the input sequence
+# Visualize how the GRU attends to different parts of the inputs sequence
 sample_sequence = X_test[0]
 pred, hidden_states = predict_with_attention(model, sample_sequence)
 
@@ -243,7 +251,7 @@ if len(hidden_states.shape) == 3:
     plt.figure(figsize=(12, 6))
     plt.subplot(2, 1, 1)
     plt.plot(sample_sequence)
-    plt.title('Input Sequence')
+    plt.title('inputs Sequence')
     plt.grid(True)
     
     plt.subplot(2, 1, 2)
