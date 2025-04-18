@@ -101,8 +101,7 @@ def plot_training_history(history):
     plt.tight_layout()
     plt.show()
 
-# Uncomment to display plots in a notebook environment
-# plot_training_history(history)
+plot_training_history(history)
 
 # 4. Generating predictions on new data
 print("\nEvaluating model on test data...")
@@ -171,18 +170,3 @@ for i in range(3):  # Show first 3 examples
     print(f"Document {i+1}: '{text}...'")
     print(f"  Predicted class: {pred_class}, Actual class: {actual_class}")
     print()
-
-# 7. Further experiments
-print("\nFurther experiments:")
-print("1. We could try different architectures with more or fewer layers")
-print("2. We could experiment with different dropout rates")
-print("3. We could use different word embedding techniques like Word2Vec or GloVe")
-print("4. We could experiment with recurrent networks (LSTM, GRU) for this task")
-print("5. We could use transfer learning with pre-trained language models")
-
-# 8. Wrapping up
-print("\nWrapping up:")
-print("- Successfully built a multiclass classification model for Reuters newswires")
-print(f"- Achieved {test_acc:.4f} accuracy on the test set")
-print("- Demonstrated different approaches to handling labels and loss functions")
-print("- Suggested further experiments for improving performance")
