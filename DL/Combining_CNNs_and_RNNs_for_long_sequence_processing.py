@@ -261,4 +261,4 @@ def run_sequence_processing_demo():
     print("\nDemo complete!")
 
 # Uncomment to run the demo
-# run_sequence_processing_demo()
+run_sequence_processing_demo()
